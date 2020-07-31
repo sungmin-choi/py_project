@@ -14,9 +14,13 @@
     <div class="join_header"><a href="/" class="naver_span">Naver</a></div>
 <div class="join_container">
 <form action="", method="POST">
-    <input type="text", placeholder="아이디...">
-    <input type="password", placeholder="비밀번호...">
-    <input type="password", placeholder="비밀번호 재입력...">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="fieldWrapper">
+        {{field.errors}}
+        {{field.label_tag}} {{field}}
+    </div>
+    {% endfor %}
     <input type="submit", value="회원가입">
 </form>
 

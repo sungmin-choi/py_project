@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
-  <title>네이버 책/로그인</title>
+  <title>네이버 책/유저정보</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -11,20 +10,15 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="login_header"><a href="/" class="naver_span">Naver</a></div>
-<div class="login_container">
-{%if user.is_authenticated%}
-{{user.username}}님이 이미 로그인 되있습니다.
-<a href="/auth/logout" >로그아웃</a>
-{%else%}
-<form action="", method="POST">
+    <div class="join_header"><a href="/" class="naver_span">Naver</a></div>
+<div class="userDetail_container">
+  {{email}}님 안녕하세요!
+  <form action="" method="POST">
     {% csrf_token %}
-    <input type="text", name="username",placeholder="아이디...">
-    <input type="password", name="password",placeholder="비밀번호...">
-    <input type="submit", value="로그인">
-</form>
-<a href="/auth/join">회원가입</a>
-{% endif %}
+      <input type="submit",name="제출",value=user>
+  </form>
+   <a href="/auth/change_password">비밀번호 변경하기</a>
+   <a href="/auth/logout">로그아웃</a>
 </div>
 <div class="footer">
     <span id="footer_text"><a href="/" class="naver_span">Naver<a>&copy; 2020</span>
