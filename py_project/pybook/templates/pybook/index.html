@@ -2,40 +2,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>네이버 책</title>
+  <title>PYbook</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+  <link rel="stylesheet" href="{% static 'css/header.css' %}" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="header"> <div class="header_logo"><a href="/" class="naver_span">Naver</a><span id="bookTitle">책</span></div>
+    <div class="header"> <div class="header__wrapper"> 
+        <div class="header_logo"><a href="/" class="PYbook_span">PYbook</a></div>
      <form action="/search", method="GET",name="searching">
-         <input type="text", placeholder="검색..", name="searching">
-         <input type="submit", value="검색">
+         <input type="text", placeholder="검색..", name="searching", class="search">
      </form>
      {% if user.is_authenticated %}
-     <li><a href="/auth/me" >프로필</a></li>
-     <li><a href="/auth/logout" >로그아웃</a></li>
+     <div class="loginbox">
+     <a href="/auth/me", id="profile" >프로필</a>
+     <a href="/auth/logout", id="logout" >로그아웃</a>
+    </div>
      
      {% else %}
-     <a href="/auth/login" id="login">로그인</a>
+
+     <div class="loginbox"><a href="/auth/login", id="login">로그인</a>
+    </div>
+     
      {% endif %}
     </div>
+</div>
 <div class="container">
     <div class="bookInformation">
         {% for book in books%}
-        <ul>
-        <img src="{{book.image.url}}" alt="" class="book_image">
+        <a href="/book/{{book.id}}">
+        <div class="book">
+        <img src="{{book.image.url}}" alt="", class="book_image">
         <li>{{book.name}}</li>
         <li>{{book.author}}</li>
-        <li>{{book.genre}}</li>
-        <li>{{book.grade}}</li>
-        <li>{{book.date}}</li>
-        <li>{{book.area}}</li>
-        <li>{{book.description}}</li>
-        </ul>
+        </div>
+    </a>
         {% endfor %}
     </div>
 </div>
