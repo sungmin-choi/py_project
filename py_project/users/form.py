@@ -3,13 +3,21 @@ from .models import User
 
 
 class JoinForm(forms.ModelForm):
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password1 = forms.CharField(
+        label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'password'}))
     password2 = forms.CharField(
-        label='Password confirmation', widget=forms.PasswordInput)
+        label='Password confirmation', widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password confirmation'}))
 
     class Meta:
         model = User
         fields = ['email', 'date_of_birth']
+
+    def __init__(self, *args, **kwargs):
+        super(JoinForm, self).__init__(*args, **kwargs)
+        self.fields['email'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'email address', 'style': 'margin-bottom:10px'})
+        self.fields['date_of_birth'].widget.attrs.update(
+            {'class': 'form-control', 'placeholder': 'date_of_birth', 'style': 'margin-bottom:10px'})
 
     def clean_password2(self):
         # Check that the two password entries match

@@ -1,0 +1,18 @@
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.navbar {
+  background-color: #1f8ce6;
+}
+.navbar-brand {
+  color: white !important;
+  font-size: 29px !important;
+  font-weight: 600 !important;
+}
+.nav-link {
+  color: white !important;
+}

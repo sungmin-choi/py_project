@@ -1,26 +1,30 @@
-
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
-<head>
-  <title>네이버 책/회원가입</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="join_header"><a href="/" class="naver_span">Naver</a></div>
-<div class="join_container">
-<h1>{{info}}</h1>
-{% if b%}
-<a href="/auth/login">로그인</a>
-{% else %}
-<a href="/auth/join">회원가입</a>
-{% endif %}
-</div>
-<div class="footer">
-    <span id="footer_text"><a href="/" class="naver_span">Naver<a>&copy; 2020</span>
-</div>
-</body>
+<html lang="ko">
+  <head>
+    <title>pybook /회원가입</title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}" />
+    <body class="text-center">
+      <div class="form-signin">
+        <p>{{info}}</p>
+        {% if b%}
+        <a href="/auth/login" class="btn btn-lg btn-primary btn-block"
+          >로그인</a
+        >
+        {% else %}
+        <a href="/auth/join" class="btn btn-lg btn-primary btn-block"
+          >회원가입</a
+        >
+        {% endif %}
+        <p class="mt-5 mb-3 text-muted">PYbook &copy; 2020</p>
+      </div>
+    </body>
+  </head>
+</html>

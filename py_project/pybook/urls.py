@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name="home"),
     url(r'^search/$', views.search),
+    url(r'^book/(?P<id>.+)/$', views.bookDetail),
 ]

@@ -19,3 +19,7 @@ def search(request):
                                       | Q(author__contains=searching))
     context = {'books': books, 'searching': searching}
     return render(request, 'pybook/search.html', context)
+
+
+def bookDetail(request, id):
+    return render(request, 'pybook/bookDetail.html')

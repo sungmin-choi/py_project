@@ -12,14 +12,19 @@ from django.contrib.auth.hashers import check_password
 
 
 def userlogin(request):
+    print(request.POST)
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
         myuser = authenticate(username=username, password=password)
         if myuser is not None:
+            print("성공")
             login(request, myuser)
-
             return redirect('/')
+        else:
+            print("실패")
+    else:
+        print("post 안됨")
     return render(request, 'users/login.html')
 
 
@@ -82,3 +87,7 @@ def change_password(request):
 
     else:
         return render(request, 'users/change_password.html')
+
+
+def example(request):
+    return render(request, 'users/example.html')

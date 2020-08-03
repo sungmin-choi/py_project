@@ -1,32 +1,57 @@
-
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
-<head>
-  <title>네이버 책/로그인</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="login_header"><a href="/" class="naver_span">Naver</a></div>
-<div class="login_container">
-{%if user.is_authenticated%}
-{{user.username}}님이 이미 로그인 되있습니다.
-<a href="/auth/logout" >로그아웃</a>
-{%else%}
-<form action="", method="POST">
-    {% csrf_token %}
-    <input type="text", name="username",placeholder="아이디...">
-    <input type="password", name="password",placeholder="비밀번호...">
-    <input type="submit", value="로그인">
-</form>
-<a href="/auth/join">회원가입</a>
-{% endif %}
-</div>
-<div class="footer">
-    <span id="footer_text"><a href="/" class="naver_span">Naver<a>&copy; 2020</span>
-</div>
-</body>
+<html lang="ko">
+  <head>
+    <title>pybook /로그인</title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}" />
+  </head>
+  <body class="text-center">
+    {%if user.is_authenticated%}
+    <div class="form-signin">
+      {{user.email}}
+      <p>님이 이미 로그인 되있습니다.</p>
+      <a href="/auth/logout">로그아웃</a>
+      <p class="mt-5 mb-3 text-muted">PYbook &copy; 2020</p>
+    </div>
+
+    {%else%}
+    <form class="form-signin" , action="" , method="POST">
+      {% csrf_token %}
+      <a href="/" class="signin-header">PYbook</a>
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input
+        type="email"
+        id="inputEmail"
+        class="form-control"
+        placeholder="Email address"
+        name="username"
+        required
+        autofocus
+      />
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input
+        type="password"
+        id="inputPassword"
+        name="password"
+        class="form-control"
+        placeholder="Password"
+        required
+      />
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        로그인
+      </button>
+      <div class="join"><a href="/auth/join">회원가입</a></div>
+
+      <p class="mt-5 mb-3 text-muted">PYbook &copy; 2020</p>
+      {% endif %}
+    </form>
+  </body>
+</html>
