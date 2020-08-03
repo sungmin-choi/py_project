@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{% static 'css/starter-template.css' %}" />
     <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bookDetail.css' %}" />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -108,6 +109,42 @@
     </nav>
 
     <main role="main" class="container">
+       <div class="container book_container">
+         <div class="">
+        <img src="{{book_detail.image.url}}" class="card-img-top" alt="..." style="width: 200px; height: 310px !important; "/>
+      </div>
+      <div class="book_info">
+        <p>{{book_detail.genre}}</p>
+        <h1 class="bookTitle">{{book_detail.name}}</h1>
+        <p>{{book_detail.grade}}</p>
+        <p class="book_author">{{book_detail.author}} 저</p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+          구독하기
+        </button>
+      </div>
+
+
+       </div>
+       <div class="book_title_introduce">책 소개</div>
+       <div class="book_description">
+         <p>{{book_detail.description}}</p>
+ 
+       </div>
+       <div class="book_title_introduce">저자 소개</div>
+       <div class="book_description">
+         <p>{{book_detail.author_description}}</p>
+ 
+       </div>
+      <div class="card my-4">
+        <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">{{ comment_form }}</div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
     </main>
     <footer class="footer">
       <span class="footer_text">PYbook &copy;</span>
