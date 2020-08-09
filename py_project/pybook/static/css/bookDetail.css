@@ -22,3 +22,12 @@
   font-weight: 600;
   font-size: 35px;
 }
+.star-rating {
+  width: 205px;
+}
+.star-rating,
+.star-rating span {
+  display: inline-block;
+  height: 39px;
+  overflow: hidden;
+}

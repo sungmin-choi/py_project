@@ -10,13 +10,17 @@ class Book(models.Model):
     name = models.CharField(max_length=20)
     author = models.CharField(max_length=20)
     genre = models.CharField(max_length=15)
-    grade = models.IntegerField(default=0)
+    grade = models.FloatField(default=0)
     gradeNumber = models.IntegerField(default=0)
-    date = models.DateField()
-    like = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add=True)
     author_description = models.TextField(blank=True)
-    description = models.TextField()
-    area = models.CharField(max_length=15)
+    description = models.TextField(blank=True)
+    area = models.CharField(max_length=15, blank=True)
+    subscribe_users = models.ManyToManyField(
+        User, related_name='subscribe_posts')
+
+    def __str__(self):
+        return self.name
 
 
 class Comment(models.Model):
@@ -27,8 +31,19 @@ class Comment(models.Model):
         Book, on_delete=models.CASCADE, related_name='comments')
     comment_date = models.DateTimeField(auto_now_add=True)
     like = models.IntegerField(default=0)
-    dislike = models.IntegerField(default=0)
     comment_textfield = models.TextField()
+    like_users = models.ManyToManyField(
+        User, related_name='like_posts', blank=True)
 
     def __str__(self):
         return (self.author.email if self.author else "무명") + "의 댓글"
+
+    class Meta:
+        ordering = ['-id']
+
+
+class UserDetail(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, blank=True, related_name='user')
+    user_books = models.ManyToManyField(
+        Book, related_name='book_posts')

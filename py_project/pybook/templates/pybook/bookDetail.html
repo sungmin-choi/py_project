@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
+    <link rel="stylesheet", href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU", crossorigin="anonymous" /s>
     <link rel="stylesheet" href="{% static 'css/starter-template.css' %}" />
     <link rel="stylesheet" href="{% static 'css/footer.css' %}" />
     <link rel="stylesheet" href="{% static 'css/bookDetail.css' %}" />
@@ -116,11 +116,21 @@
       <div class="book_info">
         <p>{{book_detail.genre}}</p>
         <h1 class="bookTitle">{{book_detail.name}}</h1>
-        <p>{{book_detail.grade}}</p>
-        <p class="book_author">{{book_detail.author}} 저</p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <div><span class='star-rating' style="background: url({% static 'image/star.png' %}) no-repeat;">
+          <span style="background: url({% static 'image/star.png' %}) no-repeat; width:{{grade}}%;   background-position: left bottom;
+          line-height: 0;
+          vertical-align: top;"></span>
+          </span> {{book_detail.grade}}</div>
+        <p class="book_author" style="margin-top: 20px;">{{book_detail.author}} 저</p>
+        {% if user in book_detail.subscribe_users.all %}
+        <a href="/subscribe/{{book_detail.id}}" class="btn btn-lg btn-primary btn-block" type="submit">
+          구독취소
+        </a>
+        {% else %}
+        <a href="/subscribe/{{book_detail.id}}" class="btn btn-lg btn-primary btn-block" type="submit">
           구독하기
-        </button>
+        </a>
+        {% endif %}
       </div>
 
 
@@ -136,13 +146,73 @@
  
        </div>
       <div class="card my-4">
-        <h5 class="card-header">Leave a Comment:</h5>
+        <form action="" method="POST">
+        <div class="input-group">
+          <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+            <option selected>평점해주세요...</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">제출</button>
+          </div>
+        </div>
+      </form>
+        <h5 class="card-header">댓글 쓰기:</h5>
         <div class="card-body">
             <form method="POST">
                 {% csrf_token %}
                 <div class="form-group">{{ comment_form }}</div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <ul class="list-group" style="margin-top: 15px;">
+              {% for comment in comments%}
+              {% if user.email == comment.author.email %}
+              <div class=""></div>
+              <li class="list-group-item">
+                <p style="font-weight: 600;">{{comment.author.email}}</p>
+                <p>{{comment.comment_textfield}}</p> 
+                <p style="font-size: 13px; opacity: 0.8;">{{comment.comment_date}}</p>
+                <a href="/delete/{{book_detail.id}}/{{comment.id}}" class="btn btn-lg btn-primary btn-block" style="width: 30px; height: 20px; font-size: 5px; display: flex;
+                justify-content: center;
+                padding: 0;
+                ">삭제</a>
+                <div class=""> <a href="/like/{{comment.id}}"> 
+                  {% if user in comment.like_users.all %}
+                   <a href="/like/{{book_detail.id}}/{{comment.id}}"><i class="fas fa-heart" style="color:#FF0000"></i></a>
+                  {% else %}
+                  <a href="/like/{{book_detail.id}}/{{comment.id}}"><i class="far fa-heart" ></i></a>
+                  {% endif %}
+                </a> {{ comment.like_users.count }}</div>
+              </li>
+              {% else %}
+              <div class=""></div>
+              <li class="list-group-item">
+                <p style="font-weight: 600;">{{comment.author.email}}</p>
+                <p>{{comment.comment_textfield}}</p> 
+                <p style="font-size: 13px; opacity: 0.8;">{{comment.comment_date}}</p>
+                <div class=""> <a href="/like/{{comment.id}}"> 
+                  {% if user in comment.like_users.all %}
+                   <a href="/like/{{book_detail.id}}/{{comment.id}}"><i class="fas fa-heart" style="color:#FF0000"></i></a>
+                  {% else %}
+                  <a href="/like/{{book_detail.id}}/{{comment.id}}"><i class="far fa-heart" ></i></a>
+                  {% endif %}
+                </a> {{ comment.like_users.count }}</div>
+              </li>
+              {% endif %}
+              {% endfor %}
+            </ul>
+            
+    
+            
         </div>
     </div>
     </main>
