@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.urls import reverse
+from pybook.models import UserSubscribe
 from .models import User
+from pybook.models import Book
 from django.contrib.auth.forms import UserCreationForm
 from .form import JoinForm
 from django.contrib.auth.hashers import check_password
@@ -12,19 +14,13 @@ from django.contrib.auth.hashers import check_password
 
 
 def userlogin(request):
-    print(request.POST)
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
         myuser = authenticate(username=username, password=password)
         if myuser is not None:
-            print("성공")
             login(request, myuser)
             return redirect('/')
-        else:
-            print("실패")
-    else:
-        print("post 안됨")
     return render(request, 'users/login.html')
 
 
@@ -38,6 +34,8 @@ def userjoin(request):
     if request.method == "POST":
         form = JoinForm(request.POST)
         if form.is_valid():
+            us = UserSubscribe.objects.create(email=request.POST['email'])
+            us.save()
             form.save()
             b = True
             info = "가입성공"
@@ -54,8 +52,8 @@ def userjoin(request):
 
 
 def userDetail(request):
-    current_user = request.user
-    context = {"email": current_user.email}
+    books = Book.objects.all()
+    context = {'books': books}
     return render(request, 'users/userDetail.html', context)
 
 

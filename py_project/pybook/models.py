@@ -17,7 +17,9 @@ class Book(models.Model):
     description = models.TextField(blank=True)
     area = models.CharField(max_length=15, blank=True)
     subscribe_users = models.ManyToManyField(
-        User, related_name='subscribe_posts')
+        User, related_name='subscribe_posts', blank=True)
+    grade_users = models.ManyToManyField(
+        User, related_name='User_posts', blank=True)
 
     def __str__(self):
         return self.name
@@ -42,8 +44,10 @@ class Comment(models.Model):
         ordering = ['-id']
 
 
-class UserDetail(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, blank=True, related_name='user')
+class UserSubscribe(models.Model):
+    email = models.EmailField(unique=True)
     user_books = models.ManyToManyField(
         Book, related_name='book_posts')
+
+    def __str__(self):
+        return self.email

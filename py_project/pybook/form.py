@@ -11,3 +11,9 @@ class BookCommentForm(forms.ModelForm):
 
             'comment_textfield': forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'cols': 40})
         }
+
+
+class BookGrade(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['grade']

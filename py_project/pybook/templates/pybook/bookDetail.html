@@ -120,15 +120,15 @@
           <span style="background: url({% static 'image/star.png' %}) no-repeat; width:{{grade}}%;   background-position: left bottom;
           line-height: 0;
           vertical-align: top;"></span>
-          </span> {{book_detail.grade}}</div>
+          </span> {{book_detail.grade}} ({{book_detail.grade_users.count}})</div>
         <p class="book_author" style="margin-top: 20px;">{{book_detail.author}} 저</p>
         {% if user in book_detail.subscribe_users.all %}
-        <a href="/subscribe/{{book_detail.id}}" class="btn btn-lg btn-primary btn-block" type="submit">
-          구독취소
+        <a href="/subscribe/{{book_detail.id}}" class="btn btn-lg btn-primary btn-block" type="submit" style="background-color:brown;">
+          대여중
         </a>
         {% else %}
         <a href="/subscribe/{{book_detail.id}}" class="btn btn-lg btn-primary btn-block" type="submit">
-          구독하기
+          대여하기
         </a>
         {% endif %}
       </div>
@@ -141,33 +141,22 @@
  
        </div>
        <div class="book_title_introduce">저자 소개</div>
-       <div class="book_description">
+       <div class="book_description" style="margin-bottom: 40px;">
          <p>{{book_detail.author_description}}</p>
  
        </div>
+       <h3>평점하기</h3>
+       <form action="/grade/{{book_detail.id}}" method="POST">
+            {% csrf_token %}
+            <input type="number" class="form-control" min="0" max="10" placeholder="점수 적어주세요.." style="width: 250px; margin-bottom: 15px;" name="number" >
+        <button type="submit" class="btn btn-primary">제출</button>
+        
+
+    </form>
       <div class="card my-4">
-        <form action="" method="POST">
-        <div class="input-group">
-          <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-            <option selected>평점해주세요...</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">제출</button>
-          </div>
-        </div>
-      </form>
         <h5 class="card-header">댓글 쓰기:</h5>
         <div class="card-body">
+
             <form method="POST">
                 {% csrf_token %}
                 <div class="form-group">{{ comment_form }}</div>

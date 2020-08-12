@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete/<int:book_id>/<int:comment_id>', views.deleteCommment),
     path('like/<int:book_id>/<int:comment_id>', views.like),
     path('subscribe/<int:book_id>', views.subscribe),
+    path('grade/<int:book_id>', views.grade),
 ]
